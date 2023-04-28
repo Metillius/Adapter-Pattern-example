@@ -1,0 +1,73 @@
+
+public class Lab8{
+    public static void main(String[] args) {
+
+    }
+}
+
+interface JavaUtilLang{
+   int increment(int value);
+}
+
+class Java_to_Mac_Adaptor extends MacJIT implements JavaUtilLang{
+    
+}
+
+class MacJIT{
+    public int macIncrement(int value){
+        System.out.println("count dw 0\n" +
+                "_start:\n" +
+                "mov count,"+ value + "\n" +
+                "mov ax, [count]\n" +
+                "add ax, 1\n" +
+                "mov [count], ax\n" +
+                "mov eax, 1\n" +
+                "xor ebx, ebx\n" +
+                "int 0x80 ");
+        return value++;
+
+    }
+}
+
+class Mac32JIT extends MacJIT {
+    public int macIncrement(int value){
+        System.out.println("count dd 0\n" +
+                "_start:\n" +
+                "mov count,"+ value + "\n" +
+                "mov ax, "+ value++ + "\n" +
+                "add ax, 1\n" +
+                "mov " + value++ + " ax\n" +
+                "mov eax, 1\n" +
+                "xor ebx, ebx\n" +
+                "int 0x80 ");
+        return value++;
+    }
+}
+
+class WinJIT{
+    public int macIncrement(int value){
+        System.out.println("count dw 0\n" +
+                "start\n" +
+                "mov count" + value + "\n" +
+                "add ax, 1\n" +
+                "mov [count], ax\n" +
+                "invoke ExitProcess, 0\n" +
+                "end start ");
+        return value++;
+
+    }
+}
+
+class Win32JIT extends WinJIT{
+    public int macIncrement(int value){
+        System.out.println("count dd 0\n" +
+                "start\n" +
+                "mov count" + value + "\n" +
+                "add ax, 1\n" +
+                "mov [count], ax\n" +
+                "invoke ExitProcess, 0\n" +
+                "end start ");
+        return value++;
+
+    }
+}
